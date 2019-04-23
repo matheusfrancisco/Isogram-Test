@@ -1,5 +1,8 @@
-from unittest import TestCase, main
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
+from unittest import TestCase, main
+import sys
 
 class Isogram:
     def isIsogram(self, word):
@@ -8,8 +11,23 @@ class Isogram:
         if not word:
             isogram = False
         else:
-            isogram = len(word) == len(set(word.lower()))
-        return isogram
+            if(sys.version_info >= (3,0)):
+                digit = list(filter(str.isdigit,word))
+                if(len(digit) == len([])):
+
+                    isogram = len(word) == len(set(word.lower()))
+                    return isogram
+                else:
+                    return False
+            else:
+                digit = lambda x: filter(str.isdigit, x)
+
+                if(len(digit(word))==len([])):
+                    isogram = len(word) == len(set(word.lower()))
+                    return isogram
+
+                else:
+                    return False
 
 
 
@@ -30,15 +48,30 @@ class TestIsogram(TestCase):
         with self.assertRaises(Exception):
             self.isogram.isIsogram(123)
 
-    ''' Por mais que seja uma palavra muito grande ele vai ter que
-    verificar o tamanho do alfabeto + numeros + caracteres especial
-    isso não vai travar um programa em python no set() '''
+
     def testWithBigWords(self):
-        self.assertEqual(self.isogram.isIsogram("abcdefghijklmnopqrstuvwxyz.,;:><1234567890"), True)
+        self.assertEqual(self.isogram.isIsogram("abcdefghijklmnopqrstuvwxyz.,;:><"), True)
 
 
     def testCaseInsensitive(self):
         self.assertEqual(self.isogram.isIsogram("TEST"),False)
+
+
+    def testStringWithNumber(self):
+        self.assertEqual(self.isogram.isIsogram("123abc"),False)
+
+
+    def test1(self):
+        self.assertEqual(self.isogram.isIsogram("Dermatoglyphics"), True)
+
+
+    def test2(self):
+        self.assertEqual(self.isogram.isIsogram("aba"), False)
+
+
+    def test3(self):
+        self.assertEqual(self.isogram.isIsogram("mo0se"), False)
+
 
 
 if __name__== "__main__":
