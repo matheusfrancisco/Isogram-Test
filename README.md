@@ -1,6 +1,5 @@
 # Isogram-Test
 
-This is my implementation for the company test Atados
 
 ## Test-1
 
